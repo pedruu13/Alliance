@@ -1,0 +1,48 @@
+﻿# Bancos de Dados locais
+db.json
+users.json
+
+# Dependências Node.js
+node_modules/
+node20.zip
+node-*
+
+# Scripts temporários da IA e backups
+fix_*.js
+test_*.js
+inject_*.js
+restore_*.js
+verify_*.js
+inspect_*.js
+undo_*.js
+temp.js
+temp.txt
+test.txt
+show_*.js
+wrap_nav_texts.js
+reverse_damage.js
+premium_polish.js
+force_inline.js
+*.restored.html
+refactor_html.js
+test.js
+add_*.js
+apply_*.js
+check_*.js
+clean_*.js
+clear_*.js
+create_*.js
+debug*.js
+definitive_*.js
+design_*.js
+extract*.js
+extract*.ps1
+final_*.js
+find_*.js
+bad_lines*.txt
+current_styles.css
+AllianceaApp.exe
+
+# Scripts locais e executáveis
+QuererJoias.bat
+*.ps1

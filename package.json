@@ -1,0 +1,24 @@
+{
+  "name": "alliancea-app",
+  "version": "1.0.0",
+  "description": "Alliancea Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Alliancea",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.4.6",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.alliancea.app",
+    "productName": "Alliancea",
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
