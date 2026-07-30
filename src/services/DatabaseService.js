@@ -3,39 +3,31 @@
 
 window.DatabaseService = class DatabaseService {
   static async login(username, password) {
-    if (window.api && window.api.invoke) {
-      return await window.api.invoke('auth:login', { username, password });
+    if (window.api) {
+      return await window.api.auth.login(username, password);
     } else {
-      console.warn('Rodando sem Backend IPC. Fallback para simulação.');
-      const usersRaw = localStorage.getItem('alliancea_users');
-      if (usersRaw) {
-        const users = JSON.parse(usersRaw);
-        const usr = users[username.toLowerCase()];
-        if (usr && usr.pass === password) {
-          return { success: true, user: usr };
-        }
-      }
-      return { success: false, error: 'Usuário ou senha incorretos (Fallback).' };
+      console.error('IPC Inacessível. Login falhou.');
+      return { success: false, error: 'Sistema offline. Não é possível autenticar no momento.' };
     }
   }
 
   static async saveSale(saleData) {
-    if (window.api && window.api.invoke) {
-      return await window.api.invoke('db:sale:create', saleData);
+    if (window.api) {
+      return await window.api.sales.create(saleData);
     }
     return true; 
   }
 
   static async getSales() {
-    if (window.api && window.api.invoke) {
-      return await window.api.invoke('db:sale:list');
+    if (window.api) {
+      return await window.api.sales.list();
     }
     return [];
   }
 
   static async getStore(key) {
-    if (window.api && window.api.invoke) {
-      const response = await window.api.invoke('db:kv:get', key);
+    if (window.api) {
+      const response = await window.api.store.get(key);
       if (response && response.success && response.data) {
         return JSON.parse(response.data);
       }
@@ -53,14 +45,12 @@ window.DatabaseService = class DatabaseService {
 
   static async setStore(key, value) {
     const stringValue = JSON.stringify(value);
-    if (window.api && window.api.invoke) {
-      const response = await window.api.invoke('db:kv:set', { key, value: stringValue });
+    if (window.api) {
+      const response = await window.api.store.set(key, stringValue);
       if (response && response.success) {
         return true;
       }
     }
-    // Fallback se IPC falhar
-    localStorage.setItem(key, stringValue);
-    return true;
+    return false;
   }
 }

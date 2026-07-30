@@ -248,12 +248,6 @@
       document.getElementById('loginRoleTitle').textContent = window.loginRoleSelected === 'gerente' ? 'Acesso Gerencial' : 'Acesso Vendedora';
       const bgMap = { 'vendedora': 'url(https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=2000&auto=format&fit=crop)', 'gerente': 'url(https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2000&auto=format&fit=crop)' };
       document.getElementById('loginScreen').style.backgroundImage = bgMap[window.loginRoleSelected];
-      
-      // Auto-login DEV
-      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-         if (document.getElementById('loginUser').value === '') document.getElementById('loginUser').value = 'admin';
-         if (document.getElementById('loginPass').value === '') document.getElementById('loginPass').value = 'admin123';
-      }
     }
 
     // Inicializa persistência

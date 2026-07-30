@@ -59,17 +59,7 @@ async function initDatabase() {
   `);
 
   // Inserir admin padrão se a tabela estiver vazia
-  const countRes = db.exec('SELECT COUNT(*) as count FROM users');
-  const count = countRes[0] ? countRes[0].values[0][0] : 0;
-  
-  if (count === 0) {
-    const defaultHash = bcrypt.hashSync('admin123', 10);
-    db.run(`
-      INSERT INTO users (username, password_hash, role, name, initials) 
-      VALUES (?, ?, ?, ?, ?)
-    `, ['admin', defaultHash, 'gerente', 'Luiza Macedo', 'LM']);
-    saveDatabase(); // Salva a inicialização no disco
-  }
+  // O administrador será criado no primeiro login (First-Run) caso a tabela esteja vazia.
 
   return db;
 }
