@@ -46,3 +46,13 @@ AllianceaApp.exe
 # Scripts locais e executáveis
 QuererJoias.bat
 *.ps1
+
+# SQLite
+database.sqlite
+
+# Vite e Electron
+dist/
+release/
+.env
+.env.local
+

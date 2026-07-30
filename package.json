@@ -2,17 +2,22 @@
   "name": "alliancea-app",
   "version": "1.0.0",
   "description": "Alliancea Desktop Application",
-  "main": "main.js",
+  "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "dev": "concurrently \"vite\" \"cross-env NODE_ENV=development electron .\"",
+    "build": "vite build"
   },
   "author": "Alliancea",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^10.0.4",
+    "cross-env": "^10.1.0",
     "electron": "^29.4.6",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "vite": "^8.2.0"
   },
   "build": {
     "appId": "com.alliancea.app",
@@ -20,5 +25,9 @@
     "win": {
       "target": "nsis"
     }
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "sql.js": "^1.14.1"
   }
 }
