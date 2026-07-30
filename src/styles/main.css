@@ -1015,10 +1015,7 @@
       white-space: nowrap;
     }
     
-    .sidebar:hover {
-      width: 240px;
-      box-shadow: 10px 0 30px rgba(0,0,0,0.03);
-    }
+    
 
     .logo-area {
       display: flex;
@@ -1037,9 +1034,7 @@
       transition: opacity .2s;
       color: var(--text-muted);
     }
-    .sidebar:hover .logo-area .brand-sub {
-      opacity: 1;
-    }
+    
 
     .nav-item {
       padding: 12px 28px;
@@ -1051,9 +1046,7 @@
       padding-left: 28px;
       transition: opacity .2s;
     }
-    .sidebar:hover .nav-sect {
-      opacity: 1;
-    }
+    
 
     .nav-item.active {
       color: var(--primary) !important;
@@ -1077,13 +1070,8 @@
       background: transparent !important;
       border: none !important;
     }
-    .user-info {
-      opacity: 0;
-      transition: opacity .2s;
-    }
-    .sidebar:hover .user-info {
-      opacity: 1;
-    }
+    .user-info { transition: opacity .2s; }
+    
     .user-name { color: var(--text); }
     .user-role { color: var(--text-muted); }
 
@@ -1104,9 +1092,7 @@
       opacity: 0;
       transition: opacity .2s;
     }
-    .sidebar:hover .btn-logout span {
-      opacity: 1;
-    }
+    
     .btn-logout:hover {
       color: var(--danger);
       background: rgba(239, 68, 68, 0.05) !important;
@@ -1655,4 +1641,11 @@ html, body {
     box-shadow: none !important;
     transform: none !important;
     border-color: transparent !important;
+}
+/* FORCED COLLAPSE FIXES */
+#appWrap .sidebar.collapsed .user-info {
+    display: none !important;
+}
+#appWrap .sidebar.collapsed .nav-sect {
+    display: none !important;
 }

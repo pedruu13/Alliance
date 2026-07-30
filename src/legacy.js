@@ -252,7 +252,7 @@
       // Auto-login DEV
       if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
          if (document.getElementById('loginUser').value === '') document.getElementById('loginUser').value = 'admin';
-         if (document.getElementById('loginPass').value === '') document.getElementById('loginPass').value = 'admin';
+         if (document.getElementById('loginPass').value === '') document.getElementById('loginPass').value = 'admin123';
       }
     }
 
