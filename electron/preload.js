@@ -12,6 +12,17 @@ contextBridge.exposeInMainWorld('api', {
     get: (key) => ipcRenderer.invoke('db:kv:get', key),
     set: (key, value) => ipcRenderer.invoke('db:kv:set', { key, value })
   },
-  // Retrocompatibilidade temporária restrita
-  openExternal: (url) => ipcRenderer.send('open-external', url)
+  // Retrocompatibilidade temporária restrita com validação de segurança
+  openExternal: (url) => {
+    try {
+      const parsed = new URL(url);
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+        ipcRenderer.send('open-external', url);
+      } else {
+        console.error('Bloqueado protocolo inseguro:', parsed.protocol);
+      }
+    } catch (e) {
+      console.error('URL inválida:', url);
+    }
+  }
 });

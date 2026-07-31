@@ -1,4 +1,4 @@
-export async function doLogin() {
+﻿export async function doLogin() {
       const u = document.getElementById('loginUser').value.trim().toLowerCase();
       const p = document.getElementById('loginPass').value;
       const err = document.getElementById('loginErr');
@@ -70,3 +70,4 @@ export function doLogout() {
       document.getElementById('loginUser').value = '';
       document.getElementById('loginPass').value = '';
     }
+

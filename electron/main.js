@@ -26,6 +26,20 @@ function createWindow() {
     win.loadURL('http://localhost:5173');
   } else {
     win.loadFile(path.join(__dirname, '../dist/index.html'));
+  
+  win.webContents.on('console-message', (event, level, message, line, sourceId) => {
+    const levels = ['LOG', 'WARN', 'ERROR', 'DEBUG'];
+    console.log('[Renderer ' + levels[level] + ']', message, 'at', sourceId + ':' + line);
+  });
+  
+  win.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+    console.log('[Renderer FAIL LOAD]', errorDescription);
+  });
+  
+  win.webContents.on('crashed', () => {
+    console.log('[Renderer CRASHED]');
+  });
+
   }
 }
 
@@ -55,5 +69,14 @@ app.on('window-all-closed', () => {
 });
 
 ipcMain.on('open-external', (event, url) => {
-  shell.openExternal(url);
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+      shell.openExternal(url);
+    } else {
+      console.error('[Security] Tentativa de abrir protocolo não permitido via IPC:', parsed.protocol);
+    }
+  } catch (e) {
+    console.error('[Security] Tentativa de abrir URL inválida via IPC:', url);
+  }
 });

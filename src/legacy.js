@@ -245,9 +245,9 @@
       
       const lastUser = localStorage.getItem('alliancea_lastUser');
       if (lastUser) document.getElementById('loginUser').value = lastUser;
-      document.getElementById('loginRoleTitle').textContent = window.loginRoleSelected === 'gerente' ? 'Acesso Gerencial' : 'Acesso Vendedora';
-      const bgMap = { 'vendedora': 'url(https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?q=80&w=2000&auto=format&fit=crop)', 'gerente': 'url(https://images.unsplash.com/photo-1599643477877-530eb83abc8e?q=80&w=2000&auto=format&fit=crop)' };
-      document.getElementById('loginScreen').style.backgroundImage = bgMap[window.loginRoleSelected];
+      const elTitle = document.getElementById('loginRoleTitle');
+      if (elTitle) elTitle.textContent = window.loginRoleSelected === 'gerente' ? 'Acesso Gerencial' : 'Acesso Vendedora';
+      // Fundo da tela de login removido pelo sistema
     }
 
     // Inicializa persistência
@@ -1474,7 +1474,7 @@
     }
 
     // --- ACTIONS ---
-    function salvarVenda() {
+    async function salvarVenda() {
       if (!getActiveCaixa()) {
         toast('Operação bloqueada: O caixa diário está fechado. Por favor, abra o caixa para realizar operações.', 'err');
         return;
@@ -1515,8 +1515,18 @@
         status: statusVenda,
         obs: document.getElementById('vObs').value
       };
+
+      if (!window.DatabaseService) {
+        toast('Serviço de banco de dados inativo.', 'err');
+        return;
+      }
+      const result = await window.DatabaseService.saveSale(novaVenda);
+      if (!result || !result.success) {
+        toast(result?.error || 'Erro ao registrar venda no banco de dados. Venda cancelada.', 'err');
+        return;
+      }
+
       DB.vendas.unshift(novaVenda);
-      if (window.DatabaseService) window.DatabaseService.saveSale(novaVenda).catch(console.error);
       if (!DB.clientes.find(c => c.nome === cliente)) {
         DB.clientes.push({ nome: cliente, tel: novaVenda.tel, cpf: document.getElementById('vCpf') ? document.getElementById('vCpf').value.trim() : '', cidade: '', uf: 'SP', email: '', obs: '', pref: material, cep: document.getElementById('vCep') ? document.getElementById('vCep').value.trim() : '' });
         logAcao("Cadastro do cliente " + cliente + " (via Venda)", "config");
@@ -3922,3 +3932,124 @@ window.goPage = goPage;
 window.renderVendas = renderVendas;
 window.renderEstoque = renderEstoque;
 window.renderDashboard = renderDashboard;
+
+// Exposes
+window.saveDB = saveDB;
+window.saveUSERS = saveUSERS;
+window.migrateConfig = migrateConfig;
+window.logAcao = logAcao;
+window.matBadge = matBadge;
+window.statusBadge = statusBadge;
+window.initials = initials;
+window.setLoginRole = setLoginRole;
+window.goPage = goPage;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.toggleMultiselect = toggleMultiselect;
+window.preencheVendedoraMultiselect = preencheVendedoraMultiselect;
+window.updateMultiselectLabel = updateMultiselectLabel;
+window.getSelectedVendedoras = getSelectedVendedoras;
+window.preencheProdutoSelect = preencheProdutoSelect;
+window.preencheVendaProdutoSelect = preencheVendaProdutoSelect;
+window.renderAll = renderAll;
+window.renderDashboard = renderDashboard;
+window.renderDashboardChart = renderDashboardChart;
+window.updateFiltVendedora = updateFiltVendedora;
+window.renderVendas = renderVendas;
+window.renderEstoque = renderEstoque;
+window.renderCompraOuro = renderCompraOuro;
+window.renderEquipe = renderEquipe;
+window.renderRelatorio = renderRelatorio;
+window.setRelatorioSubTab = setRelatorioSubTab;
+window.renderLogs = renderLogs;
+window.parseDateTime = parseDateTime;
+window.getActiveCaixa = getActiveCaixa;
+window.abrirCaixa = abrirCaixa;
+window.getCaixaEsperado = getCaixaEsperado;
+window.excluirCaixaAtivo = excluirCaixaAtivo;
+window.abrirModalFecharCaixa = abrirModalFecharCaixa;
+window.fecharCaixa = fecharCaixa;
+window.renderCaixa = renderCaixa;
+window.renderClientes = renderClientes;
+window.salvarVenda = salvarVenda;
+window.abrirReceber = abrirReceber;
+window.salvarRecebimento = salvarRecebimento;
+window.salvarCompraOuro = salvarCompraOuro;
+window.calcTotal = calcTotal;
+window.salvarProduto = salvarProduto;
+window.salvarEntrada = salvarEntrada;
+window.salvarVendedora = salvarVendedora;
+window.salvarCliente = salvarCliente;
+window.verVenda = verVenda;
+window.excluirVenda = excluirVenda;
+window.imprimirRecibo = imprimirRecibo;
+window.imprimirReciboVenda = imprimirReciboVenda;
+window.geraRelRapido = geraRelRapido;
+window.exportarDados = exportarDados;
+window.importarDados = importarDados;
+window.initComissoesFiltros = initComissoesFiltros;
+window.getComFiltro = getComFiltro;
+window.vendasDoPeriodo = vendasDoPeriodo;
+window.comprasOuroDoPeriodo = comprasOuroDoPeriodo;
+window.vendasPromotorDoPeriodo = vendasPromotorDoPeriodo;
+window.renderPromotoresDatalist = renderPromotoresDatalist;
+window.renderComissoes = renderComissoes;
+window.abrirPagarIndividual = abrirPagarIndividual;
+window.renderPromotoresScreen = renderPromotoresScreen;
+window.confirmarPagamentoIndividual = confirmarPagamentoIndividual;
+window.abrirFechamento = abrirFechamento;
+window.confirmarFechamento = confirmarFechamento;
+window.imprimirComprovante = imprimirComprovante;
+window.imprimirFolhaPagamento = imprimirFolhaPagamento;
+window.loadConfigInputs = loadConfigInputs;
+window.salvarConfigNfe = salvarConfigNfe;
+window.salvarConfigDados = salvarConfigDados;
+window.salvarConfigCotacoes = salvarConfigCotacoes;
+window.sincronizarCotacoesAPI = sincronizarCotacoesAPI;
+window.salvarConfigParametros = salvarConfigParametros;
+window.findStockItemForSale = findStockItemForSale;
+window.abrirEditarProduto = abrirEditarProduto;
+window.salvarEdicaoProduto = salvarEdicaoProduto;
+window.abrirEditarVenda = abrirEditarVenda;
+window.salvarEdicaoVenda = salvarEdicaoVenda;
+window.abrirDetalhesCliente = abrirDetalhesCliente;
+window.abrirEditarVendedora = abrirEditarVendedora;
+window.salvarEdicaoVendedora = salvarEdicaoVendedora;
+window.excluirVendedora = excluirVendedora;
+window.excluirCliente = excluirCliente;
+window.excluirProduto = excluirProduto;
+window.abrirGerenciarFuncoes = abrirGerenciarFuncoes;
+window.renderFuncoes = renderFuncoes;
+window.adicionarFuncao = adicionarFuncao;
+window.excluirFuncao = excluirFuncao;
+window.preencheRolesSelect = preencheRolesSelect;
+window.renderDespesas = renderDespesas;
+window.salvarDespesa = salvarDespesa;
+window.alterarStatusDespesa = alterarStatusDespesa;
+window.excluirDespesa = excluirDespesa;
+window.excluirCompraOuro = excluirCompraOuro;
+window.timeToMinutes = timeToMinutes;
+window.formatMinutesToDuration = formatMinutesToDuration;
+window.abrirRegistrarPonto = abrirRegistrarPonto;
+window.selecionarFuncionarioPonto = selecionarFuncionarioPonto;
+window.renderRegistrosHoje = renderRegistrosHoje;
+window.salvarPonto = salvarPonto;
+window.setEquipeSubTab = setEquipeSubTab;
+window.getPontoFiltro = getPontoFiltro;
+window.initPontoFiltros = initPontoFiltros;
+window.renderPontoEquipe = renderPontoEquipe;
+window.excluirDiaPonto = excluirDiaPonto;
+window.abrirLancarPontoManual = abrirLancarPontoManual;
+window.salvarPontoManual = salvarPontoManual;
+window.imprimirEspelhoPonto = imprimirEspelhoPonto;
+window.printHtml = printHtml;
+window.abrirLinkExterno = abrirLinkExterno;
+window.imprimirEtiquetaCorreios = imprimirEtiquetaCorreios;
+window.gerarEtiquetaPdf = gerarEtiquetaPdf;
+window.R$ = R$;
+window.API_URL = API_URL;
+window.today = today;
+window.now = now;
+window.PAGE_TITLES = PAGE_TITLES;
+window.MESES_NOMES = MESES_NOMES;
+window.pontoRelogioInterval = pontoRelogioInterval;

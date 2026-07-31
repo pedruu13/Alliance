@@ -15,7 +15,7 @@ window.DatabaseService = class DatabaseService {
     if (window.api) {
       return await window.api.sales.create(saleData);
     }
-    return true; 
+    return { success: false, error: 'Banco de dados indisponível (IPC offline)' }; 
   }
 
   static async getSales() {
@@ -32,14 +32,7 @@ window.DatabaseService = class DatabaseService {
         return JSON.parse(response.data);
       }
     }
-    // Migration fallback: se não achou no SQLite, busca no localStorage
-    const local = localStorage.getItem(key);
-    if (local) {
-      const parsed = JSON.parse(local);
-      // Salva no SQLite para a próxima vez (migração transparente)
-      this.setStore(key, parsed).catch(e => console.warn('Erro ao migrar KV para SQLite:', e));
-      return parsed;
-    }
+    // Removido fallback de localStorage para dados sistêmicos
     return null;
   }
 
