@@ -1,8 +1,30 @@
 {
-  "name": "alliancea-app",
+  "name": "alliance-app",
   "version": "1.0.0",
-  "description": "Alliancea Desktop Application",
+  "description": "Sistema de Gestão Desktop para Joalherias com Controle de Estoque, Caixa e PDV Fiscal (Electron + Vite + SQLite)",
   "main": "electron/main.js",
+  "author": "Pedro <pedruu13@github>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pedruu13/Alliance.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pedruu13/Alliance/issues"
+  },
+  "homepage": "https://github.com/pedruu13/Alliance#readme",
+  "keywords": [
+    "electron",
+    "vite",
+    "sqlite",
+    "javascript",
+    "desktop-app",
+    "erp",
+    "inventory",
+    "management-system",
+    "jewelry",
+    "retail"
+  ],
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder --dir",
@@ -10,8 +32,6 @@
     "dev": "concurrently \"vite\" \"cross-env NODE_ENV=development electron .\"",
     "build": "vite build"
   },
-  "author": "Alliancea",
-  "license": "ISC",
   "devDependencies": {
     "concurrently": "^10.0.4",
     "cross-env": "^10.1.0",

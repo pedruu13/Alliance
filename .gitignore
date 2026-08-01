@@ -1,58 +1,71 @@
-﻿# Bancos de Dados locais
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Banco de dados local (Crucial manter fora do repo)
+database.sqlite
 db.json
 users.json
 
-# Dependências Node.js
+# Diretórios produzidos por ferramentas
+.nyc_output
+.grunt
+bower_components
 node_modules/
-node20.zip
-node-*
+jspm_packages
 
-# Scripts temporários da IA e backups
-fix_*.js
-test_*.js
-inject_*.js
-restore_*.js
-verify_*.js
-inspect_*.js
-undo_*.js
-temp.js
-temp.txt
-test.txt
-show_*.js
-wrap_nav_texts.js
-reverse_damage.js
-premium_polish.js
-force_inline.js
-*.restored.html
-refactor_html.js
-test.js
-add_*.js
-apply_*.js
-check_*.js
-clean_*.js
-clear_*.js
-create_*.js
-debug*.js
-definitive_*.js
-design_*.js
-extract*.js
-extract*.ps1
-final_*.js
-find_*.js
-bad_lines*.txt
-current_styles.css
+# Build do Vite e Electron
+dist/
+dist-electron/
+out/
+release/
+build/
 AllianceaApp.exe
 
-# Scripts locais e executáveis
+# Variáveis de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Cache e temporários
+.npm
+.eslintcache
+.stylelintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.cache
+.vite
+
+# Arquivos temporários e scripts mortos
+*.tmp
+*.temp
+temp.*
+test.*
+*.restored.html
+current_styles.css
+bad_lines*.txt
 QuererJoias.bat
 *.ps1
 
-# SQLite
-database.sqlite
-
-# Vite e Electron
-dist/
-release/
-.env
-.env.local
-
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
